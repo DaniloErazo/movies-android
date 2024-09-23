@@ -29,7 +29,7 @@ class SearchFragment: Fragment() {
         binding.moviesList.adapter = adapter
         //TODO review animations in recyclerview
         vm.movies.observe(viewLifecycleOwner){movies ->
-            adapter.updateData(movies)
+            adapter.setData(movies)
         }
         vm.loadMovies()
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.globant.imdb.R
@@ -12,10 +13,9 @@ import com.globant.imdb.components.viewholder.MovieCardVH
 import com.globant.imdb.model.entity.MovieDTO
 
 
-class MovieCardAdapter: RecyclerView.Adapter<MovieCardVH>(), Filterable {
+class MovieCardAdapter: ListAdapter<MovieDTO, MovieCardVH>(MovieItemDiffUtil()), Filterable {
 
     private var movies = listOf<MovieDTO>()
-    private var filteredList = emptyList<MovieDTO>()
     private val imageBase = "https://image.tmdb.org/t/p"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCardVH {
@@ -24,12 +24,9 @@ class MovieCardAdapter: RecyclerView.Adapter<MovieCardVH>(), Filterable {
         return MovieCardVH(view)
     }
 
-    override fun getItemCount(): Int {
-        return filteredList.size
-    }
 
     override fun onBindViewHolder(holder: MovieCardVH, position: Int) {
-        val data = filteredList[position]
+        val data = getItem(position)
         holder.movieTitle.text = data.movieName
         holder.movieYear.text = data.movieDate
 
@@ -37,35 +34,26 @@ class MovieCardAdapter: RecyclerView.Adapter<MovieCardVH>(), Filterable {
 
     }
 
-    fun updateData(moviesList: List<MovieDTO>){
-        val diffUtil = MovieDiffUtil(movies, moviesList)
-        val diffResults = DiffUtil.calculateDiff(diffUtil)
-        filteredList = moviesList
-        diffResults.dispatchUpdatesTo(this)
+
+    fun setData(list: ArrayList<MovieDTO>?){
+        this.movies = list!!
+        submitList(list)
     }
 
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(query: CharSequence?): FilterResults {
                 val charSearch = query.toString()
-                if (charSearch.isEmpty()) {
-                    filteredList = movies
+                val filteredList = if (charSearch.isEmpty()) {
+                    movies
                 } else {
-                    val resultList = ArrayList<MovieDTO>()
-                    for (movie in movies) {
-                        if (movie.movieName.contains(charSearch, ignoreCase = true)) {
-                            resultList.add(movie)
-                        }
-                    }
-                    filteredList = resultList
+                    movies.filter { it.movieName.lowercase().contains(charSearch) }
                 }
-                val filterResults = FilterResults()
-                filterResults.values = filteredList
-                return filterResults
+                return FilterResults().apply { values = filteredList }
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                updateData(results?.values as List<MovieDTO>)
+                submitList(results?.values as List<MovieDTO>)
             }
         }
     }
