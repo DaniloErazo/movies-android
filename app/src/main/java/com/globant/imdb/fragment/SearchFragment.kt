@@ -1,17 +1,14 @@
 package com.globant.imdb.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.globant.imdb.components.adapter.MovieCardAdapter
 import com.globant.imdb.databinding.SearchFragmentBinding
-import com.globant.imdb.model.entity.MovieDTO
 import com.globant.imdb.viewmodel.MainActivityVM
 
 class SearchFragment: Fragment() {
