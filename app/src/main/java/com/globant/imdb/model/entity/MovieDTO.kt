@@ -3,6 +3,8 @@ package com.globant.imdb.model.entity
 import com.google.gson.annotations.SerializedName
 
 data class MovieDTO(
+    @SerializedName("id")
+    val identifier: String,
     @SerializedName("original_title")
     val movieName: String,
     @SerializedName("release_date")

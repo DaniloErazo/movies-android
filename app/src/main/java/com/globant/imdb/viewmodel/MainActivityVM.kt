@@ -14,6 +14,8 @@ class MainActivityVM: ViewModel() {
 
     var movies = MutableLiveData<ArrayList<MovieDTO>>()
 
+    //TODO review dependency injection - coupling (dagger/hilt)
+
      fun loadMovies(){
         viewModelScope.launch(Dispatchers.IO){
             val response = RetrofitServices.movieRepository.getTopMovies().execute()

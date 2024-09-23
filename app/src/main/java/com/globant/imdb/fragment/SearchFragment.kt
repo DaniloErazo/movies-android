@@ -16,7 +16,6 @@ import com.globant.imdb.viewmodel.MainActivityVM
 
 class SearchFragment: Fragment() {
     private lateinit var binding: SearchFragmentBinding
-    private val filterMovies = ArrayList<MovieDTO>()
     val vm: MainActivityVM by activityViewModels()
 
     override fun onCreateView(
@@ -28,8 +27,9 @@ class SearchFragment: Fragment() {
         val adapter = MovieCardAdapter()
         binding.searchBar.clearFocus()
         binding.moviesList.adapter = adapter
+        //TODO review animations in recyclerview
         vm.movies.observe(viewLifecycleOwner){movies ->
-            adapter.setMovies(movies)
+            adapter.updateData(movies)
         }
         vm.loadMovies()
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
