@@ -11,7 +11,9 @@ import com.globant.imdb.R
 import com.globant.imdb.fragment.SearchFragment
 import com.globant.imdb.databinding.ActivityMainBinding
 import com.globant.imdb.viewmodel.MainActivityVM
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy {

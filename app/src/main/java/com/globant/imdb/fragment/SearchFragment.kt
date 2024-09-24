@@ -10,7 +10,9 @@ import androidx.fragment.app.activityViewModels
 import com.globant.imdb.components.adapter.MovieCardAdapter
 import com.globant.imdb.databinding.SearchFragmentBinding
 import com.globant.imdb.viewmodel.MainActivityVM
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment: Fragment() {
     private lateinit var binding: SearchFragmentBinding
     val vm: MainActivityVM by activityViewModels()
@@ -24,7 +26,6 @@ class SearchFragment: Fragment() {
         val adapter = MovieCardAdapter()
         binding.searchBar.clearFocus()
         binding.moviesList.adapter = adapter
-        //TODO review animations in recyclerview
         vm.movies.observe(viewLifecycleOwner){movies ->
             adapter.setData(movies)
         }

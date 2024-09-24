@@ -4,20 +4,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.model.entity.MovieDTO
-import com.globant.imdb.model.services.RetrofitServices
+import com.globant.imdb.model.repository.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class MainActivityVM: ViewModel() {
+@HiltViewModel
+class MainActivityVM @Inject constructor(private val repository: MovieRepository)
+    : ViewModel() {
 
     var movies = MutableLiveData<ArrayList<MovieDTO>>()
 
-    //TODO review dependency injection - coupling (dagger/hilt)
 
      fun loadMovies(){
         viewModelScope.launch(Dispatchers.IO){
-            val response = RetrofitServices.movieRepository.getTopMovies().execute()
+            val response = repository.getTopMovies().execute()
             movies.postValue(response.body()?.results)
 
         }
