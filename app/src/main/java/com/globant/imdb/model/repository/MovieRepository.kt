@@ -1,15 +1,20 @@
 package com.globant.imdb.model.repository
 
+import com.globant.imdb.database.dao.MovieDao
+import com.globant.imdb.database.entities.MovieDB
+import com.globant.imdb.model.entity.MovieDTO
 import com.globant.imdb.model.entity.MovieResponse
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.globant.imdb.model.services.MovieService
+import retrofit2.Response
+import javax.inject.Inject
 
-interface MovieRepository {
+class MovieRepository @Inject constructor(private val apiService: MovieService, private val movieDao: MovieDao ) {
 
-    //TODO Review repository implementation decouple
+    suspend fun getTopMovies(): Response<MovieResponse> {
+        return apiService.getTopMovies().execute()
+    }
 
-    @GET("movie/top_rated")
-    fun getTopMovies(@Query("api_key") apiKey: String = "749058a6469a1eb756bd200fa7ebb58e"): Call<MovieResponse>
-
+    suspend fun getLocalMovies(): List<MovieDB>{
+        return movieDao.getAllMovies()
+    }
 }

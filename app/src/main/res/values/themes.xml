@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Imdb" parent="Base.Theme.Imdb" />
+
+    <style name="Button.DarkGrey" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@android:color/white</item>
+    </style>
 </resources>
