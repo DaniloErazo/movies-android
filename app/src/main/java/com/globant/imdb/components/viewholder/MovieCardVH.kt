@@ -11,4 +11,6 @@ class MovieCardVH(root: View): ViewHolder(root){
     val movieTitle = binding.movieName
     val movieYear = binding.movieYear
     val movieImage = binding.movieImage
+
+    //bind in VH
 }

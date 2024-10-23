@@ -14,7 +14,7 @@ import com.globant.imdb.model.entity.MovieDTO
 class MovieCardAdapter: ListAdapter<MovieDTO, MovieCardVH>(MovieItemDiffUtil()), Filterable {
 
     private var movies = listOf<MovieDTO>()
-    private val imageBase = "https://image.tmdb.org/t/p"
+    private val imageBase = "https://image.tmdb.org/t/p/w500/"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCardVH {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,7 +28,7 @@ class MovieCardAdapter: ListAdapter<MovieDTO, MovieCardVH>(MovieItemDiffUtil()),
         holder.movieTitle.text = data.movieName
         holder.movieYear.text = data.movieDate
 
-       //Glide.with(holder.movieImage.context).load(imageBase+data.movieImage).into(holder.movieImage)
+       Glide.with(holder.movieImage.context).load(imageBase+data.movieImage).into(holder.movieImage)
 
     }
 
